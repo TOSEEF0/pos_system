@@ -1,0 +1,54 @@
+{
+  "name": "aaj-cash-and-carry",
+  "version": "1.0.0",
+  "description": "Offline POS system for Aaj Cash & Carry (Askari 11)",
+  "author": "TOSEEF0",
+  "main": "electron/main.js",
+  "scripts": {
+    "rebuild-native": "electron-builder install-app-deps",
+    "dev": "concurrently \"npm run dev --prefix frontend\" \"npm run start-electron\"",
+    "start-electron": "wait-on http://localhost:5173 && electron electron/main.js",
+    "build-frontend": "npm run build --prefix frontend",
+    "package": "npm run build-frontend && electron-builder",
+    "dist": "npm run build-frontend && electron-builder"
+  },
+  "devDependencies": {
+    "concurrently": "^8.0.0",
+    "electron": "^38.2.2",
+    "electron-builder": "^26.0.12",
+    "wait-on": "^7.0.1"
+  },
+  "build": {
+    "appId": "com.aajcashcarry.pos",
+    "productName": "Aaj Cash & Carry POS",
+    "forceCodeSigning": false,
+    "directories": {
+      "buildResources": "assets",
+      "output": "dist_electron"
+    },
+    "files": [
+      "electron/**/*",
+      "!electron/data/**/*",
+      "!electron/*.db*",
+      "!electron/*.db-wal*",
+      "!electron/*.db-shm*",
+      "frontend/dist/**/*",
+      "package.json"
+    ],
+    "win": {
+      "target": "nsis",
+      "signAndEditExecutable": false,
+      "signExts": []
+    },
+    "nsis": {
+      "oneClick": false,
+      "allowToChangeInstallationDirectory": true,
+      "createDesktopShortcut": true,
+      "shortcutName": "Aaj Cash & Carry POS"
+    }
+  },
+  "dependencies": {
+    "xlsx": "^0.18.5",
+    "csv-parse": "^5.5.6"
+  }
+}

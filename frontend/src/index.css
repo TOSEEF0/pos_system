@@ -1,0 +1,58 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Optional: global app styling tweaks */
+body {
+  @apply bg-gray-100 text-gray-800;
+}
+
+.login-shell {
+  position: relative;
+  min-height: 100vh;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow-y: auto;
+  overflow-x: hidden;
+  background:
+    radial-gradient(900px circle at 15% 10%, rgba(191, 219, 254, 0.7), transparent 55%),
+    radial-gradient(800px circle at 85% 20%, rgba(224, 231, 255, 0.7), transparent 55%),
+    linear-gradient(135deg, #dbeafe 0%, #ffffff 45%, #ede9fe 100%);
+}
+
+.login-card {
+  border-radius: 24px;
+  border: 1px solid rgba(226, 232, 240, 0.9);
+  background: #ffffff;
+  box-shadow: 0 20px 45px rgba(15, 23, 42, 0.08);
+}
+
+.login-blob {
+  position: absolute;
+  width: 280px;
+  height: 280px;
+  border-radius: 9999px;
+  opacity: 0.25;
+  pointer-events: none;
+}
+
+.blob-1 {
+  top: -100px;
+  left: -80px;
+  background: radial-gradient(circle, rgba(59, 130, 246, 0.4) 0%, transparent 70%);
+}
+
+.blob-2 {
+  bottom: -120px;
+  right: -50px;
+  background: radial-gradient(circle, rgba(99, 102, 241, 0.35) 0%, transparent 70%);
+}
+
+.blob-3 {
+  top: 45%;
+  left: 55%;
+  background: radial-gradient(circle, rgba(148, 163, 184, 0.3) 0%, transparent 70%);
+}
+

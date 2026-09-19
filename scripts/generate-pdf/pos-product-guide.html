@@ -1,0 +1,953 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Aaj Cash & Carry POS - Product Specification & Buyer Guide</title>
+  <style>
+    @page {
+      size: A4;
+      margin: 0;
+    }
+    * {
+      box-sizing: border-box;
+      -webkit-print-color-adjust: exact;
+      print-color-adjust: exact;
+    }
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      color: #1e293b;
+      background-color: #ffffff;
+      font-size: 13px;
+      line-height: 1.55;
+    }
+    .page {
+      width: 210mm;
+      height: 297mm;
+      padding: 24mm 22mm 22mm 22mm;
+      position: relative;
+      page-break-after: always;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      overflow: hidden;
+      background: #ffffff;
+    }
+    .page:last-child {
+      page-break-after: avoid;
+    }
+    
+    /* Header & Footer */
+    .doc-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-bottom: 2px solid #e2e8f0;
+      padding-bottom: 8px;
+      margin-bottom: 18px;
+    }
+    .doc-header .brand-tag {
+      font-size: 11px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.15em;
+      color: #2563eb;
+    }
+    .doc-header .doc-type {
+      font-size: 10px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: #64748b;
+    }
+    .doc-footer {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-top: 1px solid #e2e8f0;
+      padding-top: 10px;
+      font-size: 10px;
+      color: #64748b;
+      margin-top: auto;
+    }
+
+    /* Cover Page Styling */
+    .cover-page {
+      background: linear-gradient(135deg, #0f172a 0%, #1e293b 50%, #1e3a8a 100%);
+      color: #ffffff;
+      padding: 35mm 25mm 25mm 25mm;
+    }
+    .cover-badge {
+      display: inline-block;
+      background: rgba(37, 99, 235, 0.25);
+      border: 1px solid rgba(147, 197, 253, 0.4);
+      color: #93c5fd;
+      padding: 6px 14px;
+      border-radius: 9999px;
+      font-size: 11px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.18em;
+      margin-bottom: 25px;
+    }
+    .cover-title {
+      font-size: 38px;
+      font-weight: 800;
+      line-height: 1.15;
+      letter-spacing: -0.02em;
+      margin: 0 0 16px 0;
+      color: #ffffff;
+    }
+    .cover-subtitle {
+      font-size: 17px;
+      line-height: 1.5;
+      color: #cbd5e1;
+      font-weight: 400;
+      margin-bottom: 35px;
+      max-width: 540px;
+    }
+    .cover-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 16px;
+      margin-top: 25px;
+    }
+    .cover-card {
+      background: rgba(255, 255, 255, 0.06);
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      border-radius: 12px;
+      padding: 16px;
+      backdrop-filter: blur(10px);
+    }
+    .cover-card-title {
+      font-size: 13px;
+      font-weight: 700;
+      color: #60a5fa;
+      margin-bottom: 4px;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+    .cover-card-text {
+      font-size: 11.5px;
+      color: #e2e8f0;
+      line-height: 1.45;
+      margin: 0;
+    }
+    .cover-footer {
+      border-top: 1px solid rgba(255, 255, 255, 0.15);
+      padding-top: 16px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 11px;
+      color: #94a3b8;
+    }
+
+    /* Headings & Content Typography */
+    h1 {
+      font-size: 22px;
+      font-weight: 800;
+      color: #0f172a;
+      letter-spacing: -0.01em;
+      margin: 0 0 6px 0;
+    }
+    .section-intro {
+      font-size: 12.5px;
+      color: #475569;
+      margin: 0 0 16px 0;
+      line-height: 1.5;
+    }
+    h2 {
+      font-size: 15px;
+      font-weight: 700;
+      color: #1e293b;
+      margin: 18px 0 8px 0;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+    h3 {
+      font-size: 13px;
+      font-weight: 700;
+      color: #334155;
+      margin: 12px 0 4px 0;
+    }
+    p {
+      margin: 0 0 10px 0;
+    }
+
+    /* Reusable Card & Box Components */
+    .card {
+      background: #f8fafc;
+      border: 1px solid #e2e8f0;
+      border-radius: 12px;
+      padding: 14px 16px;
+      margin-bottom: 14px;
+    }
+    .card-highlight {
+      background: #eff6ff;
+      border: 1px solid #bfdbfe;
+    }
+    .card-success {
+      background: #f0fdf4;
+      border: 1px solid #bbf7d0;
+    }
+    .card-warning {
+      background: #fffbeb;
+      border: 1px solid #fde68a;
+    }
+
+    /* Grid Layouts */
+    .grid-2 {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 14px;
+      margin-bottom: 14px;
+    }
+    .grid-3 {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 12px;
+      margin-bottom: 14px;
+    }
+
+    /* Tables */
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 10px 0 16px 0;
+      font-size: 11.5px;
+    }
+    th, td {
+      padding: 8px 10px;
+      text-align: left;
+      border-bottom: 1px solid #e2e8f0;
+    }
+    th {
+      background-color: #f1f5f9;
+      font-weight: 700;
+      color: #334155;
+      text-transform: uppercase;
+      font-size: 10px;
+      letter-spacing: 0.05em;
+    }
+    tr:nth-child(even) td {
+      background-color: #f8fafc;
+    }
+    .badge {
+      display: inline-block;
+      padding: 2px 8px;
+      border-radius: 9999px;
+      font-size: 9.5px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+    }
+    .badge-blue { background: #dbeafe; color: #1d4ed8; }
+    .badge-green { background: #dcfce7; color: #15803d; }
+    .badge-purple { background: #f3e8ff; color: #7e22ce; }
+    .badge-amber { background: #fef3c7; color: #b45309; }
+
+    /* Key-Value Pairs */
+    .stat-box {
+      background: #ffffff;
+      border: 1px solid #e2e8f0;
+      border-radius: 10px;
+      padding: 10px 12px;
+      text-align: center;
+    }
+    .stat-val {
+      font-size: 18px;
+      font-weight: 800;
+      color: #1e293b;
+      margin-bottom: 2px;
+    }
+    .stat-label {
+      font-size: 10px;
+      color: #64748b;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+
+    /* Lists */
+    ul {
+      margin: 0 0 12px 0;
+      padding-left: 20px;
+    }
+    li {
+      margin-bottom: 5px;
+      font-size: 12px;
+      color: #334155;
+    }
+    li strong {
+      color: #0f172a;
+    }
+
+    .callout {
+      border-left: 4px solid #2563eb;
+      background: #f0f9ff;
+      padding: 10px 14px;
+      border-radius: 0 8px 8px 0;
+      font-size: 11.5px;
+      color: #0369a1;
+      margin: 12px 0;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ========================================================================= -->
+  <!-- PAGE 1: COVER PAGE -->
+  <!-- ========================================================================= -->
+  <div class="page cover-page">
+    <div>
+      <span class="cover-badge">Official Product &amp; Technical Manual</span>
+      <h1 class="cover-title">Aaj Cash &amp; Carry POS</h1>
+      <p class="cover-subtitle">
+        High-Performance, 100% Offline Digital Khata &amp; Retail POS Software for Pakistani Grocery, Cash &amp; Carry, and General Stores.
+      </p>
+
+      <div class="cover-grid">
+        <div class="cover-card">
+          <div class="cover-card-title">100% Offline Architecture</div>
+          <p class="cover-card-text">
+            No internet required. Zero cloud fees, zero dependency on third-party servers. All sales, margins, and customer udhaar stay strictly on the local machine.
+          </p>
+        </div>
+
+        <div class="cover-card">
+          <div class="cover-card-title">Pakistani Digital Khata</div>
+          <p class="cover-card-text">
+            Integrated Customer Udhaar Ledger with live credit limit warnings, instant payment receipts, and customer statement printouts.
+          </p>
+        </div>
+
+        <div class="cover-card">
+          <div class="cover-card-title">Sub-Millisecond Barcode POS</div>
+          <p class="cover-card-text">
+            Lightning-fast cashier checkout supporting standard laser/CCD barcode scanners, thermal receipt printers (80mm/58mm), and cash drawer kick.
+          </p>
+        </div>
+
+        <div class="cover-card">
+          <div class="cover-card-title">Fail-Safe Security &amp; PIN</div>
+          <p class="cover-card-text">
+            PBKDF2 salted password encryption, ATM-style Master Recovery PIN, and desktop physical reset tool. Complete owner autonomy.
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <div class="cover-footer">
+      <div>Version: <strong>1.0.0 Commercial Release</strong></div>
+      <div>Platform: <strong>Windows 10 / 11 (x64)</strong></div>
+      <div>Engine: <strong>Electron + React + SQLite</strong></div>
+    </div>
+  </div>
+
+  <!-- ========================================================================= -->
+  <!-- PAGE 2: EXECUTIVE SUMMARY & PAKISTANI RETAIL CONTEXT -->
+  <!-- ========================================================================= -->
+  <div class="page">
+    <div>
+      <div class="doc-header">
+        <span class="brand-tag">Aaj Cash &amp; Carry POS</span>
+        <span class="doc-type">Section 1: Executive Overview</span>
+      </div>
+
+      <h1>Executive Summary</h1>
+      <p class="section-intro">
+        Why standard cloud-based POS systems fail in Pakistani retail environments, and how Aaj POS is purpose-built for local shopkeepers.
+      </p>
+
+      <h2>The Real-World Retail Problem in Pakistan</h2>
+      <p>
+        Most modern POS systems are web-based (cloud apps requiring constant monthly subscriptions in USD). In ordinary Pakistani commercial markets (e.g. Lahore, Karachi, Rawalpindi, Faisalabad), shopkeepers face three critical issues:
+      </p>
+      <ul>
+        <li><strong>Frequent Internet &amp; Power Fluctuations:</strong> When internet slows down or disconnects, cloud POS systems freeze, halting customer checkout queues and causing severe revenue loss.</li>
+        <li><strong>Data Privacy &amp; Tax Concerns:</strong> Shopkeepers do not want their exact daily profit margins, supplier purchase costs, or customer udhaar registers uploaded to external cloud servers.</li>
+        <li><strong>Recurring SaaS Fees:</strong> Store owners reject paying monthly or annual subscription fees for software that holds their business data hostage.</li>
+      </ul>
+
+      <h2>The Solution: Aaj Cash &amp; Carry POS</h2>
+      <p>
+        Aaj Cash &amp; Carry POS is an offline-first Windows desktop application. It requires <strong>zero internet connectivity</strong> to execute sales, update stock, register customers, or print receipts. The store owner owns the software and all database records 100% locally.
+      </p>
+
+      <div class="grid-3">
+        <div class="stat-box">
+          <div class="stat-val" style="color: #2563eb;">0.00 ms</div>
+          <div class="stat-label">Cloud Latency (100% Local)</div>
+        </div>
+        <div class="stat-box">
+          <div class="stat-val" style="color: #16a34a;">PKR 0</div>
+          <div class="stat-label">Monthly Subscription</div>
+        </div>
+        <div class="stat-box">
+          <div class="stat-val" style="color: #7c3aed;">100%</div>
+          <div class="stat-label">Offline Data Privacy</div>
+        </div>
+      </div>
+
+      <h2>Target Market Segments</h2>
+      <div class="card">
+        <table style="margin: 0;">
+          <thead>
+            <tr>
+              <th>Business Type</th>
+              <th>Typical Daily Volume</th>
+              <th>Key Benefiting Feature</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong>Cash &amp; Carry Stores</strong></td>
+              <td>500 – 3,000 items/day</td>
+              <td>High-speed barcode lookup &amp; instant thermal printing</td>
+            </tr>
+            <tr>
+              <td><strong>General &amp; Grocery Stores</strong></td>
+              <td>100 – 500 bills/day</td>
+              <td>Digital Khata (Customer Udhaar Register) with limits</td>
+            </tr>
+            <tr>
+              <td><strong>Wholesale / Distributor Counters</strong></td>
+              <td>50 – 200 large orders</td>
+              <td>Vendor Creditor tracking &amp; Purchase invoice records</td>
+            </tr>
+            <tr>
+              <td><strong>Cosmetics, Marts &amp; Bakeries</strong></td>
+              <td>200 – 1,000 items/day</td>
+              <td>Profit Margin analytics &amp; Excel product catalog import</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="callout">
+        <strong>Buyer Guarantee:</strong> This application installs as a self-contained Windows executable. It does not require installing separate web servers (like XAMPP or Apache) or external database servers (like MySQL). Everything is pre-bundled in a single installer.
+      </div>
+    </div>
+
+    <div class="doc-footer">
+      <span>Aaj Cash &amp; Carry POS - Product Specification</span>
+      <span>Page 2 of 8</span>
+    </div>
+  </div>
+
+  <!-- ========================================================================= -->
+  <!-- PAGE 3: TECHNOLOGY STACK & ARCHITECTURE -->
+  <!-- ========================================================================= -->
+  <div class="page">
+    <div>
+      <div class="doc-header">
+        <span class="brand-tag">Aaj Cash &amp; Carry POS</span>
+        <span class="doc-type">Section 2: Technical Architecture</span>
+      </div>
+
+      <h1>Technology Stack &amp; Engineering Design</h1>
+      <p class="section-intro">
+        Built with modern, battle-tested software engineering practices to guarantee rock-solid stability and zero memory leaks.
+      </p>
+
+      <h2>Core Technology Stack</h2>
+      <table>
+        <thead>
+          <tr>
+            <th>Layer</th>
+            <th>Technology</th>
+            <th>Version</th>
+            <th>Role in System</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>Desktop Shell</strong></td>
+            <td>Electron</td>
+            <td>38.2.2</td>
+            <td>Provides native Windows OS integration, hardware thermal printer drivers, and secure file system access.</td>
+          </tr>
+          <tr>
+            <td><strong>Frontend Framework</strong></td>
+            <td>React</td>
+            <td>18.x</td>
+            <td>Declarative, component-based user interface rendering at 60 FPS without page reloads.</td>
+          </tr>
+          <tr>
+            <td><strong>Build Tooling</strong></td>
+            <td>Vite</td>
+            <td>7.1.9</td>
+            <td>Ultra-fast bundling, production minification, and optimized tree-shaking for compact asset sizes.</td>
+          </tr>
+          <tr>
+            <td><strong>Styling &amp; UI</strong></td>
+            <td>Tailwind CSS</td>
+            <td>3.4.x</td>
+            <td>Custom responsive layout, glassmorphic login screen, high-contrast readable POS screens.</td>
+          </tr>
+          <tr>
+            <td><strong>Database Engine</strong></td>
+            <td>Better-SQLite3</td>
+            <td>12.4.1</td>
+            <td>Fastest embedded C++ SQLite driver for Node.js. Direct synchronous disk queries without network overhead.</td>
+          </tr>
+          <tr>
+            <td><strong>Security &amp; Crypto</strong></td>
+            <td>Node Crypto (PBKDF2)</td>
+            <td>Native</td>
+            <td>Cryptographically secure salted password and PIN hashing preventing credential leaks.</td>
+          </tr>
+          <tr>
+            <td><strong>Data Visualization</strong></td>
+            <td>Recharts</td>
+            <td>2.x</td>
+            <td>High-performance SVG charting for Sales &amp; Profit analytics, category donuts, and trends.</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <h2>Architecture Diagram</h2>
+      <div class="card card-highlight">
+        <h3 style="margin-top: 0; color: #1e40af;">Security &amp; Data Flow Isolation</h3>
+        <p style="font-size: 11.5px; color: #334155; margin-bottom: 8px;">
+          The application strictly follows Chromium context isolation security standards:
+        </p>
+        <ul>
+          <li><strong>Renderer (React Frontend):</strong> Runs in a sandboxed web view with <code>nodeIntegration: false</code> and <code>contextIsolation: true</code>. It cannot directly touch disk or execute system commands.</li>
+          <li><strong>Preload Bridge (<code>preload.js</code>):</strong> Exposes only typed, strictly validated IPC invoke channels under <code>window.api</code>.</li>
+          <li><strong>Main Process (<code>main.js</code> + <code>database.js</code>):</strong> Executes in Node.js, directly managing the local SQLite database and thermal receipt hardware.</li>
+        </ul>
+      </div>
+
+      <h2>Database Integrity: SQLite WAL Mode</h2>
+      <p>
+        The database utilizes <strong>Write-Ahead Logging (WAL mode)</strong>:
+      </p>
+      <ul>
+        <li><strong>Crash Resistance:</strong> If power suddenly cuts off during a sale in a Pakistani shop, existing records are never corrupted. Pending transactions roll back cleanly.</li>
+        <li><strong>Concurrent Reads &amp; Writes:</strong> Cashier billing operations can write sales records while Admin analytics simultaneously read reports without locking the database.</li>
+      </ul>
+    </div>
+
+    <div class="doc-footer">
+      <span>Aaj Cash &amp; Carry POS - Product Specification</span>
+      <span>Page 3 of 8</span>
+    </div>
+  </div>
+
+  <!-- ========================================================================= -->
+  <!-- PAGE 4: POS BILLING & DIGITAL KHATA -->
+  <!-- ========================================================================= -->
+  <div class="page">
+    <div>
+      <div class="doc-header">
+        <span class="brand-tag">Aaj Cash &amp; Carry POS</span>
+        <span class="doc-type">Section 3: POS &amp; Digital Khata</span>
+      </div>
+
+      <h1>Smart POS Checkout &amp; Digital Khata</h1>
+      <p class="section-intro">
+        Engineered for rapid cashier throughput during peak rush hours, integrated seamlessly with a Pakistani customer udhaar register.
+      </p>
+
+      <h2>1. Cashier POS Billing Module</h2>
+      <div class="grid-2">
+        <div class="card">
+          <h3 style="margin-top: 0; color: #2563eb;">Barcode Scanner Integration</h3>
+          <p style="font-size: 11.5px; color: #475569;">
+            Supports all standard USB &amp; wireless 1D/2D barcode guns. Global keystroke interception ensures barcodes are detected and added to cart within <strong>0.1 seconds</strong> without requiring the cashier to click the search box first.
+          </p>
+        </div>
+        <div class="card">
+          <h3 style="margin-top: 0; color: #2563eb;">Multi-Item Cart &amp; Discounts</h3>
+          <p style="font-size: 11.5px; color: #475569;">
+            Real-time subtotal, percentage discounts, item quantity editing, and automated change return calculator (e.g. Total Rs. 780, Received Rs. 1,000 &rarr; Return Rs. 220).
+          </p>
+        </div>
+      </div>
+
+      <h2>2. Pakistani Digital Khata (Customer Credit Ledger)</h2>
+      <p>
+        In Pakistani neighbourhood retail, over <strong>40% to 60% of total revenue</strong> runs on customer trust and monthly credit ("Udhaar"). Aaj POS replaces manual paper notebooks with a tamper-proof digital ledger.
+      </p>
+
+      <div class="card card-success">
+        <div class="grid-2" style="margin: 0;">
+          <div>
+            <h3 style="margin-top: 0; color: #166534;">Credit Limit Enforcement</h3>
+            <p style="font-size: 11.5px; color: #14532d; margin: 0;">
+              Every customer can be assigned a maximum Udhaar limit (e.g. Rs. 15,000). If a credit sale exceeds this limit, the POS displays a prominent amber warning badge or blocks the sale per shop settings.
+            </p>
+          </div>
+          <div>
+            <h3 style="margin-top: 0; color: #166534;">Instant Customer Search</h3>
+            <p style="font-size: 11.5px; color: #14532d; margin: 0;">
+              Cashiers can search customers by name or mobile number with live balance indicators. If the customer is new, an inline modal allows adding them in 5 seconds without clearing the cart.
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <h2>3. "Who Owes Me Money?" Outstanding Dues View</h2>
+      <p>
+        The dedicated <strong>Outstanding Dues</strong> tab lists all customers who have pending balances, showing their phone numbers, last payment dates, and days elapsed since their last transaction. Shopkeepers can print an account statement or payment receipt in one click.
+      </p>
+
+      <h2>4. Thermal Receipt Printing</h2>
+      <ul>
+        <li><strong>Standard 80mm &amp; 58mm Support:</strong> Formatted specifically for ESC/POS thermal paper rolls.</li>
+        <li><strong>Bilingual Header &amp; Urdu Notes:</strong> Displays shop name, address, NTN, invoice number, cashier name, customer name (for credit bills), previous balance, and new total balance.</li>
+        <li><strong>Custom Footer:</strong> Customizable message (e.g., <em>"Khareeda hua maal 3 din mein wapis ho sakta hai"</em>).</li>
+      </ul>
+    </div>
+
+    <div class="doc-footer">
+      <span>Aaj Cash &amp; Carry POS - Product Specification</span>
+      <span>Page 4 of 8</span>
+    </div>
+  </div>
+
+  <!-- ========================================================================= -->
+  <!-- PAGE 5: INVENTORY, VENDORS & SALES ANALYTICS -->
+  <!-- ========================================================================= -->
+  <div class="page">
+    <div>
+      <div class="doc-header">
+        <span class="brand-tag">Aaj Cash &amp; Carry POS</span>
+        <span class="doc-type">Section 4: Inventory &amp; Analytics</span>
+      </div>
+
+      <h1>Inventory, Purchases &amp; Profit Analytics</h1>
+      <p class="section-intro">
+        Track stock levels, vendor credit payables, and real daily gross profit margins with zero guesswork.
+      </p>
+
+      <h2>1. Inventory &amp; Excel Catalog Import</h2>
+      <div class="grid-2">
+        <div class="card">
+          <h3 style="margin-top: 0; color: #0284c7;">Bulk Excel / CSV Import</h3>
+          <p style="font-size: 11.5px; color: #475569;">
+            Import thousands of existing store products from Excel sheets in seconds. Handles columns for barcode, product name, purchase price, selling price, and category automatically.
+          </p>
+        </div>
+        <div class="card">
+          <h3 style="margin-top: 0; color: #0284c7;">Low Stock &amp; Real-Time Inventory</h3>
+          <p style="font-size: 11.5px; color: #475569;">
+            Stock quantities automatically decrement upon checkout and increment upon vendor purchase receiving. Real-time stock counts prevent over-selling.
+          </p>
+        </div>
+      </div>
+
+      <h2>2. Vendor Creditors &amp; Purchase Tracking</h2>
+      <p>
+        Track commercial suppliers (e.g., Unilever, Nestlé, local market distributors). Record incoming purchase invoices, upfront cash paid, and outstanding balances owed to suppliers with chronological payment histories.
+      </p>
+
+      <h2>3. Sales &amp; Profit Analytics Dashboard</h2>
+      <p>
+        Many retail POS apps show only total sales, leaving the shopkeeper unaware of their actual profit. Aaj POS calculates true gross profit using <code>Selling Price - Purchase Price - Discounts</code>:
+      </p>
+
+      <div class="card">
+        <table style="margin: 0;">
+          <thead>
+            <tr>
+              <th>Metric Card</th>
+              <th>Calculation Basis</th>
+              <th>Business Purpose</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong>Gross Sales</strong></td>
+              <td>Total item selling value</td>
+              <td>Overall transaction volume before discounts</td>
+            </tr>
+            <tr>
+              <td><strong>Discounts Given</strong></td>
+              <td>Sum of invoice discount amounts</td>
+              <td>Tracks how much money was discounted to customers</td>
+            </tr>
+            <tr>
+              <td><strong>Cost of Goods (COGS)</strong></td>
+              <td>Sum of item purchase costs</td>
+              <td>Direct capital spent on purchased inventory</td>
+            </tr>
+            <tr>
+              <td><strong>Net Profit / Loss</strong></td>
+              <td><code>Net Sales - Total Purchase Cost</code></td>
+              <td>Actual realized take-home profit for the owner</td>
+            </tr>
+            <tr>
+              <td><strong>Profit Margin %</strong></td>
+              <td><code>(Net Profit / Net Sales) * 100</code></td>
+              <td>Efficiency rating of current pricing and store margins</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h2>Visual Analytics Charts</h2>
+      <ul>
+        <li><strong>Multi-Bar Overview:</strong> Semantic color bars showing daily Sales (Blue), Cost (Amber), and Profit (Green) or Loss (Red).</li>
+        <li><strong>Category Donut Breakdown:</strong> Displays revenue contribution percentage by department (e.g., Beverages 32%, Grocery 45%, Snacks 23%).</li>
+        <li><strong>Date Range Filtering:</strong> Quick toggles for <em>Today, Yesterday, Last 7 Days, Last 30 Days, This Month</em>, or custom calendar ranges.</li>
+      </ul>
+    </div>
+
+    <div class="doc-footer">
+      <span>Aaj Cash &amp; Carry POS - Product Specification</span>
+      <span>Page 5 of 8</span>
+    </div>
+  </div>
+
+  <!-- ========================================================================= -->
+  <!-- PAGE 6: SECURITY & PASSWORD RECOVERY -->
+  <!-- ========================================================================= -->
+  <div class="page">
+    <div>
+      <div class="doc-header">
+        <span class="brand-tag">Aaj Cash &amp; Carry POS</span>
+        <span class="doc-type">Section 5: Security &amp; Master PIN</span>
+      </div>
+
+      <h1>Security, Roles &amp; Password Recovery</h1>
+      <p class="section-intro">
+        Commercial-grade role isolation preventing unauthorized cashier access, paired with an emergency recovery mechanism.
+      </p>
+
+      <h2>1. Strict Role-Based Access Control (RBAC)</h2>
+      <div class="grid-2">
+        <div class="card card-highlight">
+          <h3 style="margin-top: 0; color: #1e40af;">Admin Account (Shop Owner)</h3>
+          <ul style="margin: 0; padding-left: 18px;">
+            <li>Full access to Dashboard, Sales, &amp; Profit charts</li>
+            <li>Cost prices, purchase invoices, &amp; supplier dues</li>
+            <li>Digital Khata customer management &amp; adjustments</li>
+            <li>Shop settings, cashier registration, &amp; backups</li>
+            <li>Password management &amp; Master Recovery PIN</li>
+          </ul>
+        </div>
+
+        <div class="card">
+          <h3 style="margin-top: 0; color: #334155;">Cashier Accounts (Billing Staff)</h3>
+          <ul style="margin: 0; padding-left: 18px;">
+            <li>Locked strictly to the POS Billing checkout screen</li>
+            <li>Can scan items, accept cash/credit, and print receipts</li>
+            <li><strong>CANNOT</strong> see product cost prices or shop profits</li>
+            <li><strong>CANNOT</strong> edit settings or delete past sales</li>
+            <li><strong>CANNOT</strong> access financial audit logs</li>
+          </ul>
+        </div>
+      </div>
+
+      <h2>2. Master Recovery PIN (ATM-Style Secret Code)</h2>
+      <p>
+        In typical retail shops, if the owner forgets their admin password, they often have to pay an expensive technician or re-install the software, losing their records. Aaj POS solves this with a built-in <strong>Master Recovery PIN</strong>:
+      </p>
+
+      <div class="card card-warning">
+        <h3 style="margin-top: 0; color: #92400e;">How the Master PIN Works:</h3>
+        <ol style="margin: 0; padding-left: 20px; font-size: 12px; color: #78350f;">
+          <li>The owner configures a secret 4 to 6 digit PIN (e.g., <code>7860</code>) inside <strong>Shop Settings</strong>.</li>
+          <li>If the admin password is ever forgotten, the owner clicks <strong>"Forgot Password?"</strong> on the login screen.</li>
+          <li>The software prompts for the secret Master PIN. Once verified, the owner immediately types a new password and logs in.</li>
+        </ol>
+      </div>
+
+      <h2>3. Desktop Emergency Reset Tool (<code>emergency-reset-admin.bat</code>)</h2>
+      <p>
+        If the owner forgets <em>both</em> their password and their Master Recovery PIN, they can double-click the included <code>emergency-reset-admin.bat</code> batch file directly on their Windows desktop.
+      </p>
+      <ul>
+        <li>Resets admin credentials back to default (<code>admin</code> / <code>1234</code>) without touching any sales, product, or customer khata data.</li>
+        <li>Requires physical access to the Windows operating system file system, preventing remote or cashier tampering.</li>
+      </ul>
+
+      <h2>4. Complete Audit Trail (<code>audit_logs</code>)</h2>
+      <p>
+        Every sensitive operation (password change, Master PIN update, database backup, database restore, manual khata adjustment, and sale deletion) is permanently recorded with timestamp and username.
+      </p>
+    </div>
+
+    <div class="doc-footer">
+      <span>Aaj Cash &amp; Carry POS - Product Specification</span>
+      <span>Page 6 of 8</span>
+    </div>
+  </div>
+
+  <!-- ========================================================================= -->
+  <!-- PAGE 7: STORAGE & HARDWARE SPECIFICATIONS -->
+  <!-- ========================================================================= -->
+  <div class="page">
+    <div>
+      <div class="doc-header">
+        <span class="brand-tag">Aaj Cash &amp; Carry POS</span>
+        <span class="doc-type">Section 6: Hardware &amp; Performance</span>
+      </div>
+
+      <h1>Storage, Hardware &amp; Offline Verification</h1>
+      <p class="section-intro">
+        Extremely lightweight system footprint designed to run smoothly on low-cost, refurbished retail computers.
+      </p>
+
+      <h2>Storage &amp; Database Growth Analysis</h2>
+      <p>
+        Because the application uses native SQLite binary storage instead of heavy client-server database engines, disk usage is exceptionally minimal:
+      </p>
+
+      <table>
+        <thead>
+          <tr>
+            <th>Operating Milestone</th>
+            <th>Approximate Size</th>
+            <th>Real-World Hardware Impact</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>App Installation (.exe)</strong></td>
+            <td>~180 MB – 220 MB</td>
+            <td>Takes less than <strong>0.2%</strong> of a standard 120GB SSD.</td>
+          </tr>
+          <tr>
+            <td><strong>Empty Clean Database</strong></td>
+            <td>~250 KB</td>
+            <td>Less than a single smartphone photo.</td>
+          </tr>
+          <tr>
+            <td><strong>1,000 Transactions</strong></td>
+            <td>~1.2 MB</td>
+            <td>Negligible impact on disk space.</td>
+          </tr>
+          <tr>
+            <td><strong>10,000 Transactions</strong></td>
+            <td>~15 MB</td>
+            <td>Smaller than a single video clip.</td>
+          </tr>
+          <tr>
+            <td><strong>100,000 Transactions</strong></td>
+            <td>~120 MB – 150 MB</td>
+            <td>Represents <strong>3 to 5 years</strong> of busy cash &amp; carry traffic.</td>
+          </tr>
+          <tr>
+            <td><strong>Active RAM Footprint</strong></td>
+            <td>~120 MB – 220 MB</td>
+            <td>Extremely light; will not slow down other computer tasks.</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <h2>Minimum &amp; Recommended Hardware</h2>
+      <div class="grid-2">
+        <div class="card">
+          <h3 style="margin-top: 0; color: #334155;">Minimum Hardware (Entry Level)</h3>
+          <ul style="margin: 0; padding-left: 18px; font-size: 11.5px;">
+            <li><strong>CPU:</strong> Intel Core 2 Duo / Celeron / Core i3 (2nd Gen+)</li>
+            <li><strong>RAM:</strong> 4 GB DDR3</li>
+            <li><strong>Storage:</strong> 120 GB HDD or SSD</li>
+            <li><strong>Operating System:</strong> Windows 10 (64-bit)</li>
+            <li><strong>Display:</strong> 1024 &times; 768 resolution screen</li>
+          </ul>
+        </div>
+
+        <div class="card card-highlight">
+          <h3 style="margin-top: 0; color: #1e40af;">Recommended Hardware (Ideal)</h3>
+          <ul style="margin: 0; padding-left: 18px; font-size: 11.5px;">
+            <li><strong>CPU:</strong> Intel Core i3 / i5 (4th Gen or newer)</li>
+            <li><strong>RAM:</strong> 8 GB DDR3 / DDR4</li>
+            <li><strong>Storage:</strong> 128 GB or 256 GB SSD</li>
+            <li><strong>Operating System:</strong> Windows 10 / 11 (64-bit)</li>
+            <li><strong>Printer:</strong> 80mm USB Thermal Receipt Printer</li>
+          </ul>
+        </div>
+      </div>
+
+      <h2>100% Offline &amp; Privacy Verification</h2>
+      <div class="card card-success">
+        <ul style="margin: 0; padding-left: 18px; font-size: 11.5px; color: #14532d;">
+          <li><strong>Zero Cloud Telemetry:</strong> No outgoing network requests are made to external endpoints.</li>
+          <li><strong>Content Security Policy (CSP):</strong> Enforced in production to reject external web connections (<code>connect-src 'self'</code>).</li>
+          <li><strong>Data Security:</strong> Customer phone numbers, debt records, and profit margins never leave the buyer's physical hard drive.</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="doc-footer">
+      <span>Aaj Cash &amp; Carry POS - Product Specification</span>
+      <span>Page 7 of 8</span>
+    </div>
+  </div>
+
+  <!-- ========================================================================= -->
+  <!-- PAGE 8: BUYER SETUP & MAINTENANCE GUIDE -->
+  <!-- ========================================================================= -->
+  <div class="page">
+    <div>
+      <div class="doc-header">
+        <span class="brand-tag">Aaj Cash &amp; Carry POS</span>
+        <span class="doc-type">Section 7: Buyer Deployment Guide</span>
+      </div>
+
+      <h1>Buyer Setup &amp; Deployment Guide</h1>
+      <p class="section-intro">
+        How to install and set up this POS on a client's computer in under 10 minutes.
+      </p>
+
+      <h2>Step-by-Step Installation Process</h2>
+      
+      <div class="card">
+        <h3 style="margin-top: 0; color: #2563eb;">Step 1: Run the Windows Installer</h3>
+        <p style="font-size: 11.5px; color: #334155; margin: 0;">
+          Copy <code>Aaj Cash &amp; Carry POS Setup 1.0.0.exe</code> to the buyer's computer (via USB or download) and double-click to install. It automatically creates a desktop shortcut.
+        </p>
+      </div>
+
+      <div class="card">
+        <h3 style="margin-top: 0; color: #2563eb;">Step 2: Initial Admin Login</h3>
+        <p style="font-size: 11.5px; color: #334155; margin: 0;">
+          Open the app. Select <strong>Role: Admin</strong>. Log in using default credentials:
+          <br><strong>Username:</strong> <code>admin</code> &nbsp;|&nbsp; <strong>Password:</strong> <code>1234</code>
+        </p>
+      </div>
+
+      <div class="card">
+        <h3 style="margin-top: 0; color: #2563eb;">Step 3: Configure Shop Branding &amp; Master PIN</h3>
+        <p style="font-size: 11.5px; color: #334155; margin: 0;">
+          Go to <strong>Shop Settings</strong>:
+          <br>&bull; Update Shop Name, Phone Number, Address, and upload the store logo.
+          <br>&bull; Change the default admin password to the owner's personal password.
+          <br>&bull; Set a 4 to 6 digit <strong>Master Recovery PIN</strong> (e.g. <code>7860</code>).
+        </p>
+      </div>
+
+      <div class="card">
+        <h3 style="margin-top: 0; color: #2563eb;">Step 4: Create Cashier Accounts</h3>
+        <p style="font-size: 11.5px; color: #334155; margin: 0;">
+          Go to <strong>Register Cashier</strong>. Create staff accounts (e.g., <code>toseef</code>, <code>kashif</code>) with secure passwords. Cashiers cannot see store profits or settings.
+        </p>
+      </div>
+
+      <div class="card">
+        <h3 style="margin-top: 0; color: #2563eb;">Step 5: Backup Routine (1-Click USB Backup)</h3>
+        <p style="font-size: 11.5px; color: #334155; margin: 0;">
+          Advise the shopkeeper to plug in a USB flash drive once a week, go to <strong>Shop Settings &rarr; Offline Database Backup</strong>, and click <strong>"Backup Database Now"</strong>. A single <code>.db</code> file will save all their products, sales, and customer khata records safely.
+        </p>
+      </div>
+
+      <div class="callout" style="border-left-color: #16a34a; background: #f0fdf4; color: #15803d; margin-top: 15px;">
+        <strong>Ready to Deploy &amp; Commercialize:</strong> This application is 100% turnkey. No ongoing server maintenance, no external database administration, and zero technical overhead for the retailer.
+      </div>
+    </div>
+
+    <div class="doc-footer">
+      <span>Aaj Cash &amp; Carry POS - Product Specification</span>
+      <span>Page 8 of 8</span>
+    </div>
+  </div>
+
+</body>
+</html>

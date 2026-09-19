@@ -1,0 +1,13 @@
+{
+  "name": "aaj-licensing-server",
+  "version": "1.0.0",
+  "description": "Authoritative Licensing & Trial Server for Aaj Cash & Carry POS",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "issue": "node issueLicense.js"
+  },
+  "dependencies": {
+    "express": "^4.21.2"
+  }
+}
